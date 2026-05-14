@@ -88,33 +88,41 @@
   .header-left {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     min-width: 0; /* allow shrinking */
+    flex: 1;
+  }
+
+  /* Header center */
+  .header-center {
+    display: flex;
+    align-items: center;
+    gap: 4px;
   }
 
   /* Header right section */
   .header-right {
     display: flex;
-    align-items: center;
-    gap: 10px;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 3px;
     min-width: 0;
+    flex-shrink: 0;
   }
 
   /* User badge */
   .user-badge {
     background: var(--primary-light);
     color: var(--primary);
-    padding: 4px 10px;
+    padding: 3px 10px;
     border-radius: 20px;
     font-size: 12px;
     font-weight: 600;
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 4px;
+    gap: 3px;
     white-space: nowrap;
-    max-width: 120px;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    line-height: 1.2;
   }
 
   .logout-btn {
@@ -518,7 +526,7 @@
       padding: 8px 16px;
       height: auto;
       min-height: 50px;
-      gap: 8px;
+      gap: 6px;
     }
     .header-left {
       gap: 6px;
@@ -526,34 +534,38 @@
       min-width: 0;
     }
     .header-title {
-      font-size: 15px;
+      font-size: 16px;
       gap: 6px;
     }
     .header-title img {
       width: 26px !important;
       height: 26px !important;
     }
+    .header-center {
+      gap: 2px;
+    }
     .user-badge {
-      padding: 3px 8px;
+      padding: 2px 8px;
       font-size: 11px;
-      max-width: 80px;
     }
     .tab-switcher {
       padding: 2px;
       gap: 1px;
     }
     .tab-btn {
-      padding: 5px 14px;
+      padding: 5px 12px;
       font-size: 13px;
     }
     .header-right {
-      gap: 6px;
+      gap: 2px;
+      flex-direction: column;
+      align-items: flex-end;
     }
     .header-progress {
-      font-size: 12px;
+      font-size: 11px;
     }
     .logout-btn {
-      padding: 4px 8px;
+      padding: 2px 8px;
       font-size: 10px;
     }
     #overview-page, #study-page { padding: 16px; }
@@ -594,19 +606,21 @@
   <header class="header">
     <div class="header-left">
       <div class="header-title">
-        <img src="https://cdn.jsdelivr.net/gh/289915727-maker/durian-english@main/icon_durian_english.png" alt="榴莲学单词" style="width:32px;height:32px;border-radius:8px;object-fit:cover;flex-shrink:0;">
-        <span>榴莲学单词</span>
+        <img src="https://cdn.jsdelivr.net/gh/289915727-maker/durian-english@main/icon_durian_english.png" alt="榴莲英语" style="width:32px;height:32px;border-radius:8px;object-fit:cover;flex-shrink:0;">
+        <span>榴莲英语</span>
       </div>
+    </div>
+    <div class="header-center">
+      <div class="tab-switcher">
+        <button class="tab-btn active" id="tab-overview" onclick="switchTab('overview')">全览</button>
+        <button class="tab-btn" id="tab-study" onclick="switchTab('study')">学习</button>
+      </div>
+    </div>
+    <div class="header-right">
       <div class="user-badge">
         <span>👤</span>
         <span id="user-name">用户</span>
       </div>
-    </div>
-    <div class="tab-switcher">
-      <button class="tab-btn active" id="tab-overview" onclick="switchTab('overview')">全览</button>
-      <button class="tab-btn" id="tab-study" onclick="switchTab('study')">学习</button>
-    </div>
-    <div class="header-right">
       <div class="header-progress" id="header-progress">
         已掌握 <strong id="mastered-count">0</strong> / <strong id="total-count">0</strong>
       </div>
