@@ -43,33 +43,21 @@
     min-height: 120px;
   }
   
-  /* Header left - decorative durian image */
+  /* Header left - large durian icon, no background */
   .header-brand {
-    width: 160px;
+    width: 140px;
     min-height: 120px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    position: relative;
-    overflow: hidden;
-  }
-  .header-brand::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: url('https://cdn.jsdelivr.net/gh/289915727-maker/durian-english@main/icon_durian_english.png') center center / 120px no-repeat;
-    opacity: 0.3;
+    padding: 10px;
   }
   .header-brand-icon {
-    width: 64px;
-    height: 64px;
-    border-radius: 16px;
+    width: 100px;
+    height: 100px;
+    border-radius: 20px;
     object-fit: cover;
-    position: relative;
-    z-index: 1;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
   }
   
   /* Header center - title + tabs */
@@ -122,19 +110,20 @@
 
   /* Header right section */
   .header-right {
-    width: 140px;
+    width: 100px;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    align-items: center;
     justify-content: center;
     padding: 12px 16px;
-    gap: 6px;
+    gap: 8px;
     flex-shrink: 0;
   }
 
-  /* User row: badge + logout side by side */
+  /* User row: badge + logout stacked vertically */
   .user-row {
     display: flex;
+    flex-direction: column;
     align-items: center;
     gap: 6px;
   }
@@ -556,17 +545,14 @@
       min-height: auto;
     }
     .header-brand {
-      width: 70px;
-      min-height: 70px;
+      width: 60px;
+      min-height: 60px;
+      padding: 6px;
     }
     .header-brand-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
-    }
-    .header-brand::before {
-      background: url('https://cdn.jsdelivr.net/gh/289915727-maker/durian-english@main/icon_durian_english.png') center center / 60px no-repeat;
-      opacity: 0.3;
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
     }
     .header-center-wrap {
       flex: 1;
@@ -588,15 +574,16 @@
     }
     .header-right {
       width: auto;
-      padding: 10px 12px;
+      padding: 10px 8px;
       gap: 4px;
     }
     .user-row {
+      flex-direction: column;
       gap: 4px;
     }
     .user-badge {
-      padding: 3px 10px;
-      font-size: 12px;
+      padding: 3px 8px;
+      font-size: 11px;
     }
     .logout-btn {
       padding: 3px 8px;
