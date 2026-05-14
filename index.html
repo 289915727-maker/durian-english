@@ -35,25 +35,60 @@
   .header {
     background: #fff;
     border-bottom: 1px solid var(--border);
-    padding: 0 24px;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 60px;
+    align-items: stretch;
     position: sticky;
     top: 0;
     z-index: 100;
-    flex-wrap: wrap;
+    min-height: 120px;
   }
-  .header-title {
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--text-primary);
+  
+  /* Header left - decorative durian image */
+  .header-brand {
+    width: 160px;
+    min-height: 120px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     display: flex;
     align-items: center;
-    gap: 8px;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
   }
-  .header-title span.emoji { font-size: 22px; }
+  .header-brand::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: url('https://cdn.jsdelivr.net/gh/289915727-maker/durian-english@main/icon_durian_english.png') center center / 120px no-repeat;
+    opacity: 0.3;
+  }
+  .header-brand-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    object-fit: cover;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  }
+  
+  /* Header center - title + tabs */
+  .header-center-wrap {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 16px;
+    gap: 10px;
+  }
+  .header-title-main {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--text-primary);
+    text-align: center;
+    letter-spacing: 2px;
+  }
   .tab-switcher {
     display: flex;
     background: var(--bg);
@@ -62,7 +97,7 @@
     gap: 3px;
   }
   .tab-btn {
-    padding: 8px 28px;
+    padding: 8px 32px;
     border-radius: 10px;
     border: none;
     cursor: pointer;
@@ -81,32 +116,19 @@
     font-size: 13px;
     color: var(--text-muted);
     white-space: nowrap;
+    margin-top: 4px;
   }
   .header-progress strong { color: var(--primary); }
 
-  /* Header left section */
-  .header-left {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    min-width: 0;
-    flex: 1;
-  }
-
-  /* Header center */
-  .header-center {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
-
   /* Header right section */
   .header-right {
+    width: 140px;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    gap: 4px;
-    min-width: 0;
+    justify-content: center;
+    padding: 12px 16px;
+    gap: 6px;
     flex-shrink: 0;
   }
 
@@ -530,54 +552,54 @@
   /* Responsive */
   @media (max-width: 600px) {
     .header {
-      padding: 8px 16px;
-      height: auto;
-      min-height: 50px;
-      gap: 6px;
+      flex-direction: row;
+      min-height: auto;
     }
-    .header-left {
-      gap: 6px;
-      flex: 1;
-      min-width: 0;
+    .header-brand {
+      width: 70px;
+      min-height: 70px;
     }
-    .header-title {
-      font-size: 16px;
-      gap: 6px;
-    }
-    .header-title img {
-      width: 26px !important;
-      height: 26px !important;
-    }
-    .header-center {
-      gap: 2px;
-    }
-    .tab-switcher {
-      padding: 3px;
-      gap: 2px;
+    .header-brand-icon {
+      width: 40px;
+      height: 40px;
       border-radius: 10px;
     }
+    .header-brand::before {
+      background: url('https://cdn.jsdelivr.net/gh/289915727-maker/durian-english@main/icon_durian_english.png') center center / 60px no-repeat;
+      opacity: 0.3;
+    }
+    .header-center-wrap {
+      flex: 1;
+      padding: 10px 8px;
+      gap: 6px;
+    }
+    .header-title-main {
+      font-size: 18px;
+      letter-spacing: 1px;
+    }
     .tab-btn {
-      padding: 7px 20px;
+      padding: 6px 20px;
       font-size: 14px;
       border-radius: 8px;
     }
+    .header-progress {
+      font-size: 11px;
+      margin-top: 2px;
+    }
     .header-right {
-      gap: 3px;
-      flex-direction: column;
-      align-items: flex-end;
+      width: auto;
+      padding: 10px 12px;
+      gap: 4px;
     }
     .user-row {
-      gap: 5px;
+      gap: 4px;
     }
     .user-badge {
       padding: 3px 10px;
       font-size: 12px;
     }
-    .header-progress {
-      font-size: 12px;
-    }
     .logout-btn {
-      padding: 3px 10px;
+      padding: 3px 8px;
       font-size: 11px;
     }
     #overview-page, #study-page { padding: 16px; }
@@ -616,18 +638,24 @@
 <div id="main-app" style="display:none;">
   <!-- HEADER -->
   <header class="header">
-    <div class="header-left">
-      <div class="header-title">
-        <img src="https://cdn.jsdelivr.net/gh/289915727-maker/durian-english@main/icon_durian_english.png" alt="榴莲英语" style="width:32px;height:32px;border-radius:8px;object-fit:cover;flex-shrink:0;">
-        <span>榴莲英语</span>
-      </div>
+    <!-- Left: decorative brand area with large durian icon -->
+    <div class="header-brand">
+      <img src="https://cdn.jsdelivr.net/gh/289915727-maker/durian-english@main/icon_durian_english.png" alt="榴莲英语" class="header-brand-icon">
     </div>
-    <div class="header-center">
+    
+    <!-- Center: title + tabs stacked vertically -->
+    <div class="header-center-wrap">
+      <div class="header-title-main">榴莲学英语</div>
       <div class="tab-switcher">
         <button class="tab-btn active" id="tab-overview" onclick="switchTab('overview')">全览</button>
         <button class="tab-btn" id="tab-study" onclick="switchTab('study')">学习</button>
       </div>
+      <div class="header-progress" id="header-progress">
+        已掌握 <strong id="mastered-count">0</strong> / <strong id="total-count">0</strong>
+      </div>
     </div>
+    
+    <!-- Right: user info -->
     <div class="header-right">
       <div class="user-row">
         <div class="user-badge">
@@ -635,9 +663,6 @@
           <span id="user-name">用户</span>
         </div>
         <button class="logout-btn" onclick="logout()">切换用户</button>
-      </div>
-      <div class="header-progress" id="header-progress">
-        已掌握 <strong id="mastered-count">0</strong> / <strong id="total-count">0</strong>
       </div>
     </div>
   </header>
