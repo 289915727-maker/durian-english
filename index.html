@@ -43,6 +43,7 @@
     position: sticky;
     top: 0;
     z-index: 100;
+    flex-wrap: wrap;
   }
   .header-title {
     font-size: 18px;
@@ -82,6 +83,51 @@
     white-space: nowrap;
   }
   .header-progress strong { color: var(--primary); }
+
+  /* Header left section */
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0; /* allow shrinking */
+  }
+
+  /* Header right section */
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  /* User badge */
+  .user-badge {
+    background: var(--primary-light);
+    color: var(--primary);
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .logout-btn {
+    padding: 5px 10px;
+    background: #F1F5F9;
+    border: none;
+    border-radius: 8px;
+    font-size: 11px;
+    color: #64748B;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
 
   /* ===== FILTER BAR ===== */
   .filter-bar {
@@ -468,7 +514,48 @@
 
   /* Responsive */
   @media (max-width: 600px) {
-    .header { padding: 0 16px; }
+    .header {
+      padding: 8px 16px;
+      height: auto;
+      min-height: 50px;
+      gap: 8px;
+    }
+    .header-left {
+      gap: 6px;
+      flex: 1;
+      min-width: 0;
+    }
+    .header-title {
+      font-size: 15px;
+      gap: 6px;
+    }
+    .header-title img {
+      width: 26px !important;
+      height: 26px !important;
+    }
+    .user-badge {
+      padding: 3px 8px;
+      font-size: 11px;
+      max-width: 80px;
+    }
+    .tab-switcher {
+      padding: 2px;
+      gap: 1px;
+    }
+    .tab-btn {
+      padding: 5px 14px;
+      font-size: 13px;
+    }
+    .header-right {
+      gap: 6px;
+    }
+    .header-progress {
+      font-size: 12px;
+    }
+    .logout-btn {
+      padding: 4px 8px;
+      font-size: 10px;
+    }
     #overview-page, #study-page { padding: 16px; }
     .filter-bar { padding: 10px 16px; }
     .card-scene { height: 320px; }
@@ -505,12 +592,12 @@
 <div id="main-app" style="display:none;">
   <!-- HEADER -->
   <header class="header">
-    <div style="display:flex;align-items:center;gap:12px;">
+    <div class="header-left">
       <div class="header-title">
         <img src="https://cdn.jsdelivr.net/gh/289915727-maker/durian-english@main/icon_durian_english.png" alt="榴莲学单词" style="width:32px;height:32px;border-radius:8px;object-fit:cover;flex-shrink:0;">
         <span>榴莲学单词</span>
       </div>
-      <div style="background:#EEF2FF;color:#4F7CFF;padding:4px 12px;border-radius:20px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:4px;">
+      <div class="user-badge">
         <span>👤</span>
         <span id="user-name">用户</span>
       </div>
@@ -519,11 +606,11 @@
       <button class="tab-btn active" id="tab-overview" onclick="switchTab('overview')">全览</button>
       <button class="tab-btn" id="tab-study" onclick="switchTab('study')">学习</button>
     </div>
-    <div style="display:flex;align-items:center;gap:12px;">
+    <div class="header-right">
       <div class="header-progress" id="header-progress">
         已掌握 <strong id="mastered-count">0</strong> / <strong id="total-count">0</strong>
       </div>
-      <button onclick="logout()" style="padding:6px 12px;background:#F1F5F9;border:none;border-radius:8px;font-size:12px;color:#64748B;cursor:pointer;">切换用户</button>
+      <button class="logout-btn" onclick="logout()">切换用户</button>
     </div>
   </header>
 
@@ -821,10 +908,33 @@ function markMastered() {
   document.getElementById('session-mastered').textContent = sessionMastered;
   updateHeaderProgress();
   showToast('✓ 已掌握：' + w.word);
+  playDingSound();
   studyList.splice(studyIndex, 1);
   if (studyIndex >= studyList.length) studyIndex = Math.max(0, studyList.length - 1);
   if (studyList.length === 0) { showCompletion(); return; }
   showStudyCard();
+}
+
+// Play a ding sound when word is mastered
+function playDingSound() {
+  try {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContext) return;
+    const ctx = new AudioContext();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(880, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(1760, ctx.currentTime + 0.1);
+    gain.gain.setValueAtTime(0.3, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+    osc.start(ctx.currentTime);
+    osc.stop(ctx.currentTime + 0.3);
+  } catch (e) {
+    // Silently fail if audio is not supported
+  }
 }
 
 function showCompletion() {
