@@ -827,12 +827,13 @@ function renderOverview() {
     words.forEach(w => {
       const key = w.word + '_' + w.no;
       const mastered = masteredSet.has(key);
+      const btnText = mastered ? '去复习' : '去学习';
       html += `<div class="word-mini-card${mastered ? ' mastered' : ''}" title="${w.sentence} / ${w.sentenceTrans}">
         ${mastered ? '<span class="mini-mastered-tag">✓</span>' : ''}
         <div class="mini-word">${w.word}</div>
         <div class="mini-phonetic">${w.phonetic}</div>
         <div class="mini-meaning">${w.meaning}</div>
-        <button class="mini-learn-btn" onclick="startStudyFromWord(${WORDS_DATA.indexOf(w)}, event)">去学习</button>
+        <button class="mini-learn-btn" onclick="startStudyFromWord(${WORDS_DATA.indexOf(w)}, event)">${btnText}</button>
       </div>`;
     });
     html += '</div></div>';
@@ -869,7 +870,8 @@ function startStudyFromWord(dataIdx, e) {
   e && e.stopPropagation();
   const word = WORDS_DATA[dataIdx];
   switchTab('study');
-  studyList = filteredWords.filter(w => !masteredSet.has(w.word + '_' + w.no));
+  // Include all filtered words, not just unmastered ones, for review
+  studyList = [...filteredWords];
   const idx = studyList.findIndex(w => w.word === word.word && w.no === word.no);
   studyIndex = idx >= 0 ? idx : 0;
   sessionMastered = 0;
