@@ -57,17 +57,17 @@
   .tab-switcher {
     display: flex;
     background: var(--bg);
-    border-radius: 10px;
-    padding: 3px;
-    gap: 2px;
+    border-radius: 12px;
+    padding: 4px;
+    gap: 3px;
   }
   .tab-btn {
-    padding: 6px 20px;
-    border-radius: 8px;
+    padding: 8px 28px;
+    border-radius: 10px;
     border: none;
     cursor: pointer;
-    font-size: 14px;
-    font-weight: 500;
+    font-size: 15px;
+    font-weight: 600;
     color: var(--text-secondary);
     background: transparent;
     transition: all 0.2s;
@@ -75,7 +75,7 @@
   .tab-btn.active {
     background: #fff;
     color: var(--primary);
-    box-shadow: 0 1px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
   }
   .header-progress {
     font-size: 13px;
@@ -89,7 +89,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    min-width: 0; /* allow shrinking */
+    min-width: 0;
     flex: 1;
   }
 
@@ -105,32 +105,39 @@
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    gap: 3px;
+    gap: 4px;
     min-width: 0;
     flex-shrink: 0;
+  }
+
+  /* User row: badge + logout side by side */
+  .user-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
   }
 
   /* User badge */
   .user-badge {
     background: var(--primary-light);
     color: var(--primary);
-    padding: 3px 10px;
+    padding: 4px 12px;
     border-radius: 20px;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 600;
     display: inline-flex;
     align-items: center;
-    gap: 3px;
+    gap: 4px;
     white-space: nowrap;
     line-height: 1.2;
   }
 
   .logout-btn {
-    padding: 5px 10px;
+    padding: 4px 12px;
     background: #F1F5F9;
     border: none;
     border-radius: 8px;
-    font-size: 11px;
+    font-size: 12px;
     color: #64748B;
     cursor: pointer;
     white-space: nowrap;
@@ -544,29 +551,34 @@
     .header-center {
       gap: 2px;
     }
-    .user-badge {
-      padding: 2px 8px;
-      font-size: 11px;
-    }
     .tab-switcher {
-      padding: 2px;
-      gap: 1px;
+      padding: 3px;
+      gap: 2px;
+      border-radius: 10px;
     }
     .tab-btn {
-      padding: 5px 12px;
-      font-size: 13px;
+      padding: 7px 20px;
+      font-size: 14px;
+      border-radius: 8px;
     }
     .header-right {
-      gap: 2px;
+      gap: 3px;
       flex-direction: column;
       align-items: flex-end;
     }
+    .user-row {
+      gap: 5px;
+    }
+    .user-badge {
+      padding: 3px 10px;
+      font-size: 12px;
+    }
     .header-progress {
-      font-size: 11px;
+      font-size: 12px;
     }
     .logout-btn {
-      padding: 2px 8px;
-      font-size: 10px;
+      padding: 3px 10px;
+      font-size: 11px;
     }
     #overview-page, #study-page { padding: 16px; }
     .filter-bar { padding: 10px 16px; }
@@ -617,14 +629,16 @@
       </div>
     </div>
     <div class="header-right">
-      <div class="user-badge">
-        <span>👤</span>
-        <span id="user-name">用户</span>
+      <div class="user-row">
+        <div class="user-badge">
+          <span>👤</span>
+          <span id="user-name">用户</span>
+        </div>
+        <button class="logout-btn" onclick="logout()">切换用户</button>
       </div>
       <div class="header-progress" id="header-progress">
         已掌握 <strong id="mastered-count">0</strong> / <strong id="total-count">0</strong>
       </div>
-      <button class="logout-btn" onclick="logout()">切换用户</button>
     </div>
   </header>
 
